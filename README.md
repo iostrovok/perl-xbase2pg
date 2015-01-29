@@ -1,6 +1,6 @@
-# perl-xbase2pg
+# perl-xbase2pg #
 
-## Simple GO interface to postgresql database and SQL templater ##
+## Command line program which converts dbf/dbase file to postgresql sql. ##
 
 ### Introduction ###
 
