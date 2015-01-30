@@ -1,10 +1,7 @@
 #!/usr/bin/perl
 
 =head QuickStart
-    > perl ./Xbase2Pg.pl ./data/fias_delta_dbf/ADDROBJ.DBF | iconv -c -f CP866 -t UTF-8) | psql -U pgsql -d dbname
-
-perl ./Xbase2Pg.pl ./data/fias_delta_dbf/ADDROBJ.DBF | iconv -c -f CP866 -t UTF-8) | psql --host=127.0.0.1 --port=5432 --dbname=pqgotest -U postgres
-
+    perl ./xbase2pg.pl ./data/fias_delta_dbf/ADDROBJ.DBF | psql -U pgsql -d dbname
 =cut
 
 use strict;
@@ -16,24 +13,51 @@ use Encode;
 use open qw(:std :utf8);
 use Getopt::Long;
 
-my $file = pop @ARGV || die "No file name\n";
-die "Not found $file\n" unless -f $file;
+my $Comment      = '';
+my $Comment_s    = '';
+my $EncodFrom    = "";
+my $EncodFrom_s  = "";
+my $Help         = 0;
+my $Help_s       = 0;
+my $Schema       = '';
+my $Schema_s     = '';
+my $SplitCount   = 0;
+my $SplitCount_s = 0;
 
-my $EncodFrom  = "";
-my $SplitCount = 0;
-my $Comment    = '';
 GetOptions(
-    "from=s"  => \$EncodFrom,
-    "split=n" => \$SplitCount,
-    "com=n"   => \$Comment,
+    "from=s"   => \$EncodFrom,
+    "split=n"  => \$SplitCount,
+    "com=s"    => \$Comment,
+    "schema=s" => \$Schema,
+    "help"     => \$Help,
+    "f=s"      => \$EncodFrom_s,
+    "s=n"      => \$SplitCount_s,
+    "c=s"      => \$Comment_s,
+    "m=s"      => \$Schema_s,
+    "h"        => \$Help_s,
 );
+
+if ( $Help || $Help_s ) {
+    help();
+    exit();
+}
+
+$Comment    ||= $Comment_s;
+$EncodFrom  ||= $EncodFrom_s;
+$Schema     ||= $Schema_s;
+$SplitCount ||= $SplitCount_s;
 
 print "----START\n";
 
+my $file = pop @ARGV || die "No file name\n";
+die "Not found $file\n" unless -f $file;
 my $table_name = $file;
 die "File have to finish '.DBF' []\n" unless $table_name =~ s/\.DBF$//i;
 
 $table_name =~ s/^.+\///i;
+if ($Schema) {
+    $table_name = $Schema . '.' . $table_name;
+}
 
 my $table = new XBase $file or die XBase->errstr;
 
@@ -252,6 +276,30 @@ sub quote_G {
     my ( $val, $info ) = @_;
     $val =~ s/[^-0-9,\.]//gios;
     return $val;
+}
+
+sub help {
+    print <<END
+Usage: perl xbase2pg.pl [-m SCHEMA] [-f ENCODING] [-f NUMBER] [-c COMMENT] DBFFILE
+
+The command line program converts from "dbf/dbase" file to postgresql sql.
+
+Options controlling the dbf format:
+  -m SCHEMA,   --schema=SCHEMA where table will created
+  -f ENCODING, --from=ENCODING the encoding of the DBFFILE
+  -s NUMBER,   --split=NUMBER of row for each INSERT statment
+  -c COMMENT,  --com=COMMENT for table
+
+Informative output:
+  --help                      display this help and exit
+
+Example:
+
+perl Xbase2Pg.pl --from=cp866 --split=100000 --com="VERSION 2015-12-11." ./ADDROBJ.DBF
+
+Report bugs to <ostrovok\@gmail.com>.
+
+END
 }
 
 #return @values;
