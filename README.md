@@ -1,10 +1,6 @@
 # perl-xbase2pg #
 
-## Command line program which converts dbf/dbase file to postgresql sql. ##
-
-### Introduction ###
-
-No yet
+## The command line program converts from "dbf/dbase" file to postgresql sql. ##
 
 ### Installing ###
 
@@ -18,3 +14,21 @@ No yet
 ```perl
 perl xbase2pg.pl --schema=mydbschema --from=cp866 --split=100000 --com="COMMENT FOR DB." | psql -U $PGUSER --host=$PGHOST --port=$PGPORT --dbname=$PGDATABASE
 ```
+### Usage ###
+
+> perl xbase2pg.pl [-m SCHEMA] [-f ENCODING] [-f NUMBER] [-c COMMENT] DBFFILE
+
+Options controlling the dbf format:
+
+  -m SCHEMA,   --schema=SCHEMA where table will created
+  
+  -f ENCODING, --from=ENCODING the encoding of the DBFFILE
+  
+  -s NUMBER,   --split=NUMBER of row for each INSERT statment
+  
+  -c COMMENT,  --com=COMMENT for table
+  
+### Example ###
+
+See example in ./perl-xbase2pg/example/fias.pl
+
