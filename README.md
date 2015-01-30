@@ -30,5 +30,10 @@ Options controlling the dbf format:
   
 ### Example ###
 
-See example in ./perl-xbase2pg/example/fias.pl
+See example 
+```bash
+  cd perl-xbase2pg/example
+  perl fias.pl -h
+```
+
 
