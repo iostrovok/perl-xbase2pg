@@ -72,7 +72,7 @@ print "DROP TABLE IF EXISTS $table_name;\n";
 print "CREATE TABLE $table_name () WITH (OIDS=FALSE);\n";
 if ( $Comment ne '' ) {
     $Comment =~ s/'/''/gios;
-    print "COMMENT ON TABLE $table_name () IS '$Comment';\n";
+    print "COMMENT ON TABLE $table_name IS '$Comment';\n";
 }
 
 my $type = {
