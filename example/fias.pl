@@ -48,9 +48,7 @@ my $PGHOST     = $ENV{PGHOST};
 my $PGUSER     = $ENV{PGUSER};
 my $PGPASSWORD = $ENV{PGPASSWORD};
 my $PGPORT     = $ENV{PGPORT};
-
-#my $PGDATABASE = $ENV{PGDATABASE};
-my $PGDATABASE = 'fias_test';
+my $PGDATABASE = $ENV{PGDATABASE};
 
 my $Id = db_id();
 
