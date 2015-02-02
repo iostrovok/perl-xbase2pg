@@ -130,7 +130,12 @@ sub db_id {
 
 sub help {
     print <<END
-Usage: perl fias.pl [-m SCHEMA] [-f ENCODING] [-f NUMBER] [-c COMMENT] DBFFILE
+Usage: 
+>
+
+> export PGHOST=host; export PGPORT=port; export PGDATABASE=PGDATABASE;
+> export PGUSER=user; export PGPASSWORD=PGPASSWORD;
+> perl fias.pl [-m SCHEMA] [-f ENCODING] [-f NUMBER] [-c COMMENT] DBFFILE
 
 Is example how to use xbase2pg.pl.
 
