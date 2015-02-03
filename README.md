@@ -5,8 +5,8 @@
 ### Installing ###
 
 ```bash
-> sudo cpan XBase Encode Getopt::Long
->	git clone https://github.com/iostrovok/perl-xbase2pg.git
+sudo cpan XBase Encode Getopt::Long
+git clone https://github.com/iostrovok/perl-xbase2pg.git
 ```
 
 ### Quick start ###
