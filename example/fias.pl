@@ -68,7 +68,7 @@ my $schema = "fias_$Id";
 system("cd $dir; unrar l ./fias_dbf.rar > ./list.txt");
 
 my $perl
-    = "perl $pwd/Xbase2Pg.pl --from=cp866 --split=100000 --com=\"VERSION $Id.\" ";
+    = "perl $pwd/xbase2pg.pl --schema=$schema --from=cp866 --split=100000 --com=\"VERSION_$Id\" ";
 my $sql_send
     = "psql -U $PGUSER --host=$PGHOST --port=$PGPORT --dbname=$PGDATABASE";
 
@@ -78,7 +78,7 @@ my @schema_ex = (
     "CREATE SCHEMA $schema AUTHORIZATION $PGUSER;",
     "GRANT ALL ON SCHEMA $schema TO postgres;",
     "GRANT ALL ON SCHEMA $schema TO public;",
-    "COMMENT ON SCHEMA $schema IS 'Fias by $Id';",
+    "COMMENT ON SCHEMA $schema IS 'Fias date is $Id';",
 );
 
 foreach (@schema_ex) {
